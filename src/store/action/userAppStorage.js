@@ -67,7 +67,7 @@ export const checkIfAdminIsLoggedIn = () => {
         return
       }
 
-      response = await fetch(`http://localhost:9090/adminbytoken`, {
+      response = await fetch(`https://legal-admin-backend.onrender.com/adminbytoken`, {
         method: "GET",
         headers:{
           "Content-Type": "application/json",
@@ -91,7 +91,7 @@ export const loginAdmin = (data) => {
   let dataObj = data
   return async (dispatch, getState) => {
     try {
-      let response = await fetch('http://localhost:9090/adminlogin', {
+      let response = await fetch('https://legal-admin-backend.onrender.com/adminlogin', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -151,7 +151,7 @@ export const signupAdmin = (data) => {
   let dataObj = data
   return async (dispatch, getState) => {
     try {
-      let response = await fetch(`http://localhost:9090/adminsignup`, {
+      let response = await fetch(`https://legal-admin-backend.onrender.com/adminsignup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -216,7 +216,7 @@ export const fetchCases = ()=>{
     } = getState().userAuth
 
     try {
-      let response = await fetch(`http://localhost:9090/auth/cases`, {
+      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/cases`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -268,7 +268,7 @@ export const fetchCase = (id)=>{
     } = getState().userAuth
 
     try {
-      let response = await fetch(`http://localhost:9090/auth/cases/${id}`, {
+      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/cases/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -319,7 +319,7 @@ export const updateCase = (data)=>{
     } = getState().userAuth
 
     try {
-      let response = await fetch(`http://localhost:9090/auth/case/${data._id}`, {
+      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/case/${data._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -373,7 +373,7 @@ export const deleteCase = (id)=>{
     } = getState().userAuth
 
     try {
-      let response = await fetch(`http://localhost:9090/auth/case/${id}`, {
+      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/case/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
