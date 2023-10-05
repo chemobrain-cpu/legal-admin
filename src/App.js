@@ -24,6 +24,7 @@ const AdminCases = React.lazy(() => import('./screen/admin_screen/Dashboard/Admi
 
 
 const AdminEditCase = React.lazy(() => import('./screen/admin_screen/Dashboard/AdminEditCase'))
+//attorneys import
 
 const AdminAttorneys = React.lazy(() => import('./screen/admin_screen/Dashboard/Attorneys'))
 
@@ -33,13 +34,20 @@ const AdminEditAttorney = React.lazy(() => import('./screen/admin_screen/Dashboa
 
 const AddAttorney = React.lazy(() => import('./screen/admin_screen/Dashboard/AddAttorney'))
 
+//import from blogs
+
+const AdminBlogs = React.lazy(() => import('./screen/admin_screen/Dashboard/Blogs'))
+
+const AdminEditBlog = React.lazy(() => import('./screen/admin_screen/Dashboard/BlogEdit'))
+
+const AddBlog = React.lazy(() => import('./screen/admin_screen/Dashboard/AddBlog'))
 
 
 
 
 function App() {
   let dispatch = useDispatch()
-  let { user, color, admin,userToken,adminToken } = useSelector(state => state.userAuth)
+  let { user, color, admin, userToken, adminToken } = useSelector(state => state.userAuth)
 
   useEffect(async () => {
     await dispatch(checkIfAdminIsLoggedIn())
@@ -52,26 +60,30 @@ function App() {
       <Suspense fallback={<FallBackComponent />}>
         <Routes>
           {/*the general routes */}
-          <Route path='/' element={<AdminLogin/>} />
+          <Route path='/' element={<AdminLogin />} />
 
-          <Route path='/adminlogin' element={<AdminLogin/>} />
-           {/* the Admin  DASHBOARD routes*/}
+          <Route path='/adminlogin' element={<AdminLogin />} />
+          {/* the Admin  DASHBOARD routes*/}
 
-           <Route path='/adminsignup' element={<AdminSignup/>} />
+          <Route path='/adminsignup' element={<AdminSignup />} />
 
-           <Route path='/admindashboard/cases' element={adminToken?<AdminCases status={false}/>:<AdminLogin/>} />
+          <Route path='/admindashboard/cases' element={adminToken ? <AdminCases status={false} /> : <AdminLogin />} />
 
-           <Route path='/admindashboard/cases/:id' element={adminToken?<AdminEditCase status={true}/>:<AdminLogin/>} />
+          <Route path='/admindashboard/cases/:id' element={adminToken ? <AdminEditCase status={true} /> : <AdminLogin />} />
 
+          <Route path='/admindashboard/attorneys' element={adminToken ? <AdminAttorneys status={false} /> : <AdminLogin />} />
 
+          <Route path='/admindashboard/attorneys/:id' element={adminToken ? <AdminEditAttorney status={true} /> : <AdminLogin />} />
 
-           <Route path='/admindashboard/attorneys' element={adminToken?<AdminAttorneys status={false}/>:<AdminLogin/>} />
+          <Route path='/admindashboard/newattorney' element={adminToken ? <AddAttorney status={true} /> : <AdminLogin />} />
 
-           <Route path='/admindashboard/attorneys/:id' element={adminToken?<AdminEditAttorney status={true}/>:<AdminLogin/>} />
+          {/*blog routes*/}
 
+          <Route path='/admindashboard/blogs' element={adminToken ? <AdminBlogs status={false} /> : <AdminLogin />} />
 
+          <Route path='/admindashboard/blogs/:id' element={adminToken ? <AdminEditBlog status={true} /> : <AdminLogin />} />
 
-           <Route path='/admindashboard/newattorney' element={adminToken?<AddAttorney status={true}/>:<AdminLogin/>} />
+          <Route path='/admindashboard/newblog' element={adminToken ? <AddBlog status={true} /> : <AdminLogin />} />
         </Routes>
 
 
@@ -82,4 +94,3 @@ function App() {
 }
 
 export default App;
-//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

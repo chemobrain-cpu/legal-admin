@@ -32,7 +32,7 @@ function LoginPage() {
     let isFormValid = userEmail && !userEmailError && userPassword && !userPasswordError
 
     let toLogin =()=>{
-        navigate('/')
+        navigate('/adminsignup')
     }
 
     let setFormDetails = useCallback(e => {

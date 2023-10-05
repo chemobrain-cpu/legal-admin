@@ -35,7 +35,7 @@ function SignupPage() {
     let isFormValid =  adminPassword && !adminPasswordError && isSecretKey &&!isSecretKeyError && !adminEmailError && adminEmail
 
     let toLogin = ()=>{
-        navigate('/login')
+        navigate('/adminlogin')
     }
 
     let setFormDetails = useCallback(e => {

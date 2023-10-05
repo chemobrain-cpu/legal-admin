@@ -18,10 +18,24 @@ let topMenu = [
     link: '/admindashboard/attorneys'
   },
   {
+    icon: 'edit',
+    title: 'Blogs',
+    link:'/admindashboard/blogs'
+
+  },
+  {
+    icon: 'add',
+    title: 'new Blog',
+    link:'/admindashboard/newblog'
+
+  },
+  {
     icon: 'add',
     title: 'new attorney',
     link: '/admindashboard/newattorney'
   },
+
+  
   {
     icon: 'logout',
     title: 'Logout',

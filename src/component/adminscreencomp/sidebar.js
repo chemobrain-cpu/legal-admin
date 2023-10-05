@@ -29,8 +29,18 @@ const Sidebar = ({status}) => {
             title: 'Attorneys',
             link:'/admindashboard/attorneys'
         },
+       
+        {
+            icon: 'edit',
+            title: 'Blogs',
+            link:'/admindashboard/blogs'
+        },
 
-
+        {
+            icon: 'add',
+            title: 'new Blog',
+            link:'/admindashboard/newblog'
+        },
         {
             icon: 'add',
             title: 'new attorney',

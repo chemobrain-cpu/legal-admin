@@ -1,4 +1,4 @@
-import { LOG_ADMIN_IN, LOGIN_ADMIN, FETCH_CASE, UPDATE, DELETE, FETCH_ATTORNEY, DELETE_ATTORNEY, UPDATE_ATTORNEY, CREATE_ATTORNEY } from "../action/userAppStorage";
+import { LOG_ADMIN_IN, LOGIN_ADMIN, FETCH_CASE, UPDATE, DELETE, FETCH_ATTORNEY, DELETE_ATTORNEY, UPDATE_ATTORNEY, CREATE_ATTORNEY, FETCH_BLOGS, DELETE_BLOG, CREATE_BLOG, UPDATE_BLOG } from "../action/userAppStorage";
 
 
 
@@ -17,6 +17,7 @@ const initialState = {
     },
     casesList: [],
     attorney: [],
+    blog: [],
 }
 
 
@@ -136,7 +137,7 @@ export const userAuthReducer = (state = initialState, action) => {
             if (true) {
                 let createdAttorney = action.payload
                 let duplicate
-               
+
                 for (let data of state.attorney) {
                     if (data._id.toString() === createdAttorney._id.toString()) {
                         duplicate = true
@@ -145,10 +146,10 @@ export const userAuthReducer = (state = initialState, action) => {
                     }
                 }
 
-                if(!duplicate){
+                if (!duplicate) {
                     return {
                         ...state,
-                        attorney: [...state.attorney,createdAttorney]
+                        attorney: [...state.attorney, createdAttorney]
                     }
                 }
 
@@ -157,11 +158,80 @@ export const userAuthReducer = (state = initialState, action) => {
                 }
             }
 
+        //blogs reducers
+        case FETCH_BLOGS:
+            return {
+                ...state,
+                blog: action.payload
+            }
 
+        case DELETE_BLOG:
+            if (true) {
+                let blogId = action.payload
+                let newBlog = state.blog.filter(data => data._id !== blogId)
+
+                return {
+                    ...state,
+                    blog: newBlog
+                }
+            }
+
+        case CREATE_BLOG:
+            if (true) {
+                let createdBlog = action.payload
+                let duplicate
+
+                for (let data of state.blog) {
+                    if (data._id.toString() === createdBlog._id.toString()) {
+                        duplicate = true
+                    } else {
+                        duplicate = false
+                    }
+                }
+
+                if (!duplicate) {
+                    return {
+                        ...state,
+                        blog: [...state.blog, createdBlog]
+                    }
+                }
+
+                return {
+                    ...state
+                }
+            }
+
+        case UPDATE_BLOG:
+            if (true) {
+                let updatedBlog = action.payload
+
+                let newBlogList = []
+
+
+                for (let data of state.blog) {
+                    if (data._id.toString() === updatedBlog._id.toString()) {
+                        newBlogList.push(updatedBlog)
+                    } else {
+                        newBlogList.push(data)
+                    }
+                }
+
+                return {
+                    ...state,
+                    blog: newBlogList
+                }
+
+
+
+            }
 
         default:
             return state
     }
 
 }
+
+
+
+
 

@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react';
+import React, {useState } from 'react';
 import styles from '../../Home.module.css';
 import DashboardHeader from '../../../component/userscreencomp/dashboardNav';
 import DashboardDrawer from '../../../component/userscreencomp/Drawer';
@@ -14,7 +14,7 @@ import { AddAttorneyComponent } from '../../../component/adminscreencomp/Home/Ad
 
 
 
-const AttorneyEdit = ({ status }) => {
+const Add_Attorney = ({ status }) => {
     //tradeModal and transfer modal
     let [isError, setIsError] = useState(false)
     let [isErrorInfo,setIsErrorInfo] = useState()
@@ -35,7 +35,6 @@ const AttorneyEdit = ({ status }) => {
 
 
     let createHandler = async (data) => {
-        setIsLoading(true)
         setIsLoading(true)
         let imgUrl
 
@@ -117,4 +116,4 @@ const AttorneyEdit = ({ status }) => {
     )
 }
 
-export default AttorneyEdit
+export default Add_Attorney

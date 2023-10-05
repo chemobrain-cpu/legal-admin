@@ -51,62 +51,7 @@ export const AddAttorneyComponent = ({ createHandler, }) => {
 
    
 
-    /*const uploadHandler = async () => {
-        setIsLoading(true)
-        let imgUrl
-        
-        try{
-            let upload = async () => {
-                const config = {
-                    dirName: 'bucket/',
-                    bucketName: 'coinbasebuckets',
-                    region: 'us-east-1',
-                    accessKeyId: 'AKIAZZTWQ7HAPRYD3APX',
-                    secretAccessKey: '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'
-                }
-    
-                return ReactS3.uploadFile(file, config).then(response => {
-                    console.log(response)
-                    if (response.result.status !== 204)
-                        throw new Error("Failed to upload image to S3");
-                    else {
-    
-                        imgUrl = (response.location)
-                    }
-                })
-                    .catch(error => {
-                        console.log(error);
-                    })
-            }
-            await upload()
-
-        }catch(err){
-            setIsLoading(false)
-            setIsError(true)
-            setIsErrorInfo(err.message)
-            return
-        }
-
-        let data = {
-            user: user,
-            imageUrl:imgUrl
-        }
-
-        let res = await dispatch(uploadBackId(data))
-        setIsLoading(false)
-
-        if (!res.bool) {
-            setIsLoading(false)
-            setIsError(true)
-            setIsErrorInfo(res.message)
-            return
-        }
-        setIsLoading(false)
-        //navigate to camera 2
-        navigate('/home')
-    }*/
-
-
+   
 
    
 

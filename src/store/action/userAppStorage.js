@@ -10,6 +10,12 @@ export const FETCH_ATTORNEY = 'FETCH_ATTORNEY'
 export const DELETE_ATTORNEY = 'DELETE_ATTORNEY'
 export const UPDATE_ATTORNEY = 'UPDATE_ATTORNEY'
 export const CREATE_ATTORNEY = 'CREATE_ATTORNEY'
+export const FETCH_BLOGS = 'FETCH_BLOGS'
+export const DELETE_BLOG = 'DELETE_BLOG'
+
+export const CREATE_BLOG = 'CREATE_BLOG'
+
+export const UPDATE_BLOG = 'UPDATE_BLOG'
 
 
 
@@ -69,7 +75,10 @@ export const checkIfAdminIsLoggedIn = () => {
       if (!admin) {
         return
       }
+    //https://legal-admin-backend.onrender.com
+    
 
+    //http://localhost:909l0
       response = await fetch(`https://legal-admin-backend.onrender.com/adminbytoken`, {
         method: "GET",
         headers:{
@@ -641,6 +650,231 @@ export const createAttorney = (data)=>{
 
 
 }
+
+
+//blogs API
+export const fetchBlogs = ()=>{
+  return async (dispatch, getState) => {
+    let {
+      adminToken
+    } = getState().userAuth
+
+    try {
+      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/blogs`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "header": `${adminToken}`
+        }
+      })
+
+      //an error 
+      if (response.status === 300) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+        }
+      }
+
+      if (response.status === 301) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+        }
+      }
+
+      if (response.status === 200) {
+        let data = await response.json()
+
+        dispatch({type:FETCH_BLOGS,payload:data.response })
+
+        return {
+          bool: true,
+          message: data.response
+        }
+      }
+    }
+
+    catch (err) {
+      return {
+        bool: false,
+        message: err.message
+      }
+    }
+  }
+
+}
+
+
+export const  deleteBlog  = (id)=>{
+  return async (dispatch, getState) => {
+    let {
+      adminToken
+    } = getState().userAuth
+
+    try {
+      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/blog/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "header": `${adminToken}`
+        }
+      })
+
+      //an error 
+      if (response.status === 300) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+        }
+      }
+
+      if (response.status === 301) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+        }
+      }
+
+      if (response.status === 200) {
+
+        let data = await response.json()
+
+        dispatch({type:DELETE_BLOG,payload:id})
+
+        return {
+          bool: true,
+          message: data.response
+        }
+      }
+    }
+
+
+    catch (err) {
+      return {
+        bool: false,
+        message: err.message
+      }
+    }
+  }
+
+}
+
+export const createBlog = (data)=>{
+  return async (dispatch, getState) => {
+    let {
+      adminToken
+    } = getState().userAuth
+
+    try {
+      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/newblog`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "header": `${adminToken}`
+        },
+        body:JSON.stringify(data)
+      })
+
+
+      //an error 
+      if (response.status === 300) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+        }
+      }
+
+      if (response.status === 301) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+        }
+      }
+
+      if (response.status === 200) {
+        let data = await response.json()
+        dispatch({type:CREATE_BLOG,payload:data.response})
+        return {
+          bool: true,
+          message: data.response
+        }
+      }
+    }
+
+    catch (err) {
+      console.log(err)
+      return {
+        bool: false,
+        message: err.message
+      }
+    }
+  }
+
+
+}
+
+export const updateBlog = (data)=>{
+  return async (dispatch, getState) => {
+    let {
+      adminToken
+    } = getState().userAuth
+
+    try {
+      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/blog/${data._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "header": `${adminToken}`
+        },
+        body:JSON.stringify(data)
+      })
+
+
+      //an error 
+      if (response.status === 300) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+        }
+      }
+
+      if (response.status === 301) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+        }
+      }
+
+      if (response.status === 200) {
+        let data = await response.json()
+        dispatch({type:UPDATE_BLOG,payload:data.response})
+        return {
+          bool: true,
+          message: data.response
+        }
+      }
+    }
+
+    catch (err) {
+      console.log(err)
+      return {
+        bool: false,
+        message: err.message
+      }
+    }
+  }
+}
+
+
 
 export const logout = (id)=>{
   return async (dispatch, getState) => {
