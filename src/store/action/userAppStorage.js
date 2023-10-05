@@ -75,11 +75,11 @@ export const checkIfAdminIsLoggedIn = () => {
       if (!admin) {
         return
       }
-    //https://legal-admin-backend.onrender.com
+    //https://legal-admin-backend.onrender;;.com
     
 
-    //http://localhost:909l0
-      response = await fetch(`https://legal-admin-backend.onrender.com/adminbytoken`, {
+    //http://localhost:9090
+      response = await fetch(`http://localhost:9090/adminbytoken`, {
         method: "GET",
         headers:{
           "Content-Type": "application/json",
@@ -103,7 +103,7 @@ export const loginAdmin = (data) => {
   let dataObj = data
   return async (dispatch, getState) => {
     try {
-      let response = await fetch('https://legal-admin-backend.onrender.com/adminlogin', {
+      let response = await fetch('http://localhost:9090/adminlogin', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -163,7 +163,7 @@ export const signupAdmin = (data) => {
   let dataObj = data
   return async (dispatch, getState) => {
     try {
-      let response = await fetch(`https://legal-admin-backend.onrender.com/adminsignup`, {
+      let response = await fetch(`http://localhost:9090/adminsignup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -230,7 +230,7 @@ export const fetchCases = ()=>{
     } = getState().userAuth
 
     try {
-      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/cases`, {
+      let response = await fetch(`http://localhost:9090/auth/cases`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -282,7 +282,7 @@ export const fetchCase = (id)=>{
     } = getState().userAuth
 
     try {
-      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/cases/${id}`, {
+      let response = await fetch(`http://localhost:9090/auth/cases/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -333,7 +333,7 @@ export const updateCase = (data)=>{
     } = getState().userAuth
 
     try {
-      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/case/${data._id}`, {
+      let response = await fetch(`http://localhost:9090/auth/case/${data._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -387,7 +387,7 @@ export const deleteCase = (id)=>{
     } = getState().userAuth
 
     try {
-      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/case/${id}`, {
+      let response = await fetch(`http://localhost:9090/auth/case/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -442,7 +442,7 @@ export const fetchAttorneys = ()=>{
     } = getState().userAuth
 
     try {
-      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/attorneys`, {
+      let response = await fetch(`http://localhost:9090/auth/attorneys`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -495,7 +495,7 @@ export const  deleteAttorney  = (id)=>{
     } = getState().userAuth
 
     try {
-      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/attorney/${id}`, {
+      let response = await fetch(`http://localhost:9090/auth/attorney/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -548,7 +548,7 @@ export const updateAttorney = (data)=>{
     } = getState().userAuth
 
     try {
-      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/attorney/${data._id}`, {
+      let response = await fetch(`http://localhost:9090/auth/attorney/${data._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -602,7 +602,7 @@ export const createAttorney = (data)=>{
     } = getState().userAuth
 
     try {
-      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/newattorney`, {
+      let response = await fetch(`http://localhost:9090/auth/newattorney`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -660,7 +660,7 @@ export const fetchBlogs = ()=>{
     } = getState().userAuth
 
     try {
-      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/blogs`, {
+      let response = await fetch(`http://localhost:9090/auth/blogs`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -715,7 +715,7 @@ export const  deleteBlog  = (id)=>{
     } = getState().userAuth
 
     try {
-      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/blog/${id}`, {
+      let response = await fetch(`http://localhost:9090/auth/blog/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -771,7 +771,7 @@ export const createBlog = (data)=>{
     } = getState().userAuth
 
     try {
-      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/newblog`, {
+      let response = await fetch(`http://localhost:9090/auth/newblog`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -827,7 +827,7 @@ export const updateBlog = (data)=>{
     } = getState().userAuth
 
     try {
-      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/blog/${data._id}`, {
+      let response = await fetch(`http://localhost:9090/auth/blog/${data._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -883,6 +883,35 @@ export const logout = (id)=>{
 
 }
 
+
+
+/*
+
+
+const attorneySchema = new mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    nameOfAttorney: {
+        type: String,
+    },
+    about: {
+        type: String,
+    },
+    address: {
+        type: String
+    },
+    email: {
+        type: String
+    },
+    phone: {
+        type: String
+    },
+    photo: {
+        type: String
+    }
+})
+
+
+*/
 
 
 
