@@ -23,6 +23,14 @@ let topMenu = [
     link:'/admindashboard/blogs'
 
   },
+
+  {
+    icon: 'edit',
+    title: 'Caseblogs',
+    link:'/admindashboard/blogcases'
+
+  },
+
   {
     icon: 'add',
     title: 'new Blog',
@@ -31,8 +39,20 @@ let topMenu = [
   },
   {
     icon: 'add',
+    title: 'new Case Blog',
+    link:'/admindashboard/newblogcase'
+
+  },
+  {
+    icon: 'add',
     title: 'new attorney',
     link: '/admindashboard/newattorney'
+  },
+
+  {
+    icon: 'add',
+    title: 'new caseblog',
+    link: '/admindashboard/newblogcase'
   },
 
   
@@ -106,7 +126,7 @@ const DashboardDrawer = ({ showmenuHandler }) => {
       </div>
 
       <ul className={styles.drawerMenuCon}>
-        {bottomMenu.map(data => <li className={styles.drawerMenu} key={data.title} onClick={() => navigateHandler(data.link)} style={{ color: color.blue }}>{data.title}</li>)}
+        {bottomMenu.map(data => <li className={styles.drawerMenu} key={data.link} onClick={() => navigateHandler(data.link)} style={{ color: color.blue }}>{data.title}</li>)}
 
       </ul>
 

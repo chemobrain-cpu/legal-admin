@@ -7,20 +7,24 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import LoadingModal from "../../../component/Modal/LoadingModal";
 import { useDispatch } from 'react-redux';
-import { BlogEditComponent } from '../../../component/adminscreencomp/Home/BlogsEdit';
+
 import ReactS3 from 'react-s3';
-import { updateBlog } from '../../../store/action/userAppStorage';
+
+import { updateBlogCase } from '../../../store/action/userAppStorage';
+
 import { Error } from '../../../component/common/Error';
+import { BlogCaseEditComponent } from '../../../component/adminscreencomp/Home/BlogCasesEdit';
 
 
 
 
-const BlogEdit = ({ status }) => {
+const BlogCaseEdit = ({ status }) => {
     //tradeModal and transfer modal
     let [isError, setIsError] = useState(false)
     let [isErrorInfo, setIsErrorInfo] = useState('')
 
     let { color } = useSelector(state => state.userAuth)
+
     let [isLoading, setIsLoading] = useState(false)
     let dispatch = useDispatch()
     let navigate = useNavigate()
@@ -37,11 +41,8 @@ const BlogEdit = ({ status }) => {
 
 
     let updateHandler = async (data) => {
-        
-
         setIsLoading(true)
-        let imgUrl_1
-        let imgUrl_2
+        let imageUrl_1 = ''
 
         let newData
 
@@ -59,46 +60,22 @@ const BlogEdit = ({ status }) => {
             try {
 
                 let upload_1 = async () => {
-                    if (!data.photo) {
-                        return
-                    }
+                    if (data.photo) {
+                        return ReactS3.uploadFile(data.photo, config).then(response => {
 
-                    return ReactS3.uploadFile(data.photo, config).then(response => {
-
-                        if (response.result.status !== 204)
-                            throw new Error("Failed to upload image to S3");
-                        else {
-
-                            imgUrl_1 = (response.location)
-                        }
-                    })
-                        .catch(error => {
-                            console.log(error);
+                            if (response.result.status !== 204)
+                                throw new Error("Failed to upload image to S3");
+                            else {
+    
+                                imageUrl_1 = (response.location)
+                            }
                         })
-                }
-
-                let upload_2 = async () => {
-                    if (!data.file) {
-                        return
+                            .catch(error => {
+                                console.log(error);
+                            })
                     }
-
-                    return ReactS3.uploadFile(data.file, config).then(response => {
-
-                        if (response.result.status !== 204)
-                            throw new Error("Failed to upload image to S3");
-                        else {
-
-                            imgUrl_2 = (response.location)
-                        }
-                    })
-                        .catch(error => {
-                            console.log(error);
-                        })
                 }
-
                 await upload_1()
-
-                await upload_2()
             } catch (err) {
                 
                 setIsLoading(false)
@@ -107,37 +84,42 @@ const BlogEdit = ({ status }) => {
                 return
             }
             newData = {
-                blog_photo_url: imgUrl_1,
-                blog_photo_url2: imgUrl_2,
-                blog_topic: data.blog_topic,
-                date: data.date,
-                numOfView: data.numOfView,
-                blog_text: data.blog_text,
-                blog_qoute: data.blog_qoute,
-                blog_topic2: data.blog_topic2,
-                blog_text2: data.blog_text2,
+                case_photo_url:imageUrl_1,
+
+                case_topic:data.case_topic,
+                case_type:data.case_type,
+                case_text:data.case_text,
+                case_attorney:data.case_attorney,
+                case_duration:data.case_duration,
+                result_price:data.result_price,
+                case_category:data.case_category,
+                case_challenge:data.case_challenge,
+                case_legal_strategy:data. case_legal_strategy,
+                result_text:data.result_text,
                
 
             }
 
         } else {
             newData = {
-                blog_photo_url: data.blog_photo_url,
-                blog_photo_url2: data.blog_photo_url2,
-                blog_topic: data.blog_topic,
-                date: data.date,
-                numOfView: data.numOfView,
-                blog_text: data.blog_text,
-                blog_qoute: data.blog_qoute,
-                blog_topic2: data.blog_topic2,
-                blog_text2: data.blog_text2,
-                
+                case_photo_url:data.case_photo_url,
+                case_topic:data.case_topic,
+                case_type:data.case_type,
+                case_text:data.case_text,
+                case_attorney:data.case_attorney,
+                case_duration:data.case_duration,
+                result_price:data.result_price,
+                case_category:data.case_category,
+                case_challenge:data.case_challenge,
+                case_legal_strategy:data. case_legal_strategy,
+                result_text:data.result_text,
+               
 
             }
         }
 
         newData._id = data._id
-        let res = await dispatch(updateBlog(newData))
+        let res = await dispatch( updateBlogCase(newData))
 
         if (!res.bool) {
             setIsError(true)
@@ -146,9 +128,7 @@ const BlogEdit = ({ status }) => {
         }
 
         setIsLoading(false)
-        navigate('/admindashboard/blogs')
-
-
+        navigate('/admindashboard/blogCases')
 
 
     }
@@ -171,25 +151,11 @@ const BlogEdit = ({ status }) => {
                 {/*mobile and dashboard headers*/}
                 <DashboardDrawer showmenuHandler={showmenuHandler} />
                 <DashboardHeader showmenuHandler={showmenuHandler} title='Home' />
-                <BlogEditComponent updateHandler={updateHandler} />
+                <BlogCaseEditComponent updateHandler={updateHandler} />
             </div>
         </div>
     </>
     )
 }
 
-export default BlogEdit
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default BlogCaseEdit

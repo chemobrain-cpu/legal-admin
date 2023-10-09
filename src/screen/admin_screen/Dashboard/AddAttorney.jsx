@@ -36,30 +36,36 @@ const Add_Attorney = ({ status }) => {
 
     let createHandler = async (data) => {
         setIsLoading(true)
-        let imgUrl
+        let imgUrl = ''
+
+        const config = {
+            dirName: 'bucket/',
+            bucketName: 'coinbasebuckets',
+            region: 'us-east-1',
+            accessKeyId: 'AKIAZZTWQ7HAPRYD3APX',
+            secretAccessKey: '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'
+        }
 
         try {
             let upload = async () => {
-                const config = {
-                    dirName: 'bucket/',
-                    bucketName: 'coinbasebuckets',
-                    region: 'us-east-1',
-                    accessKeyId: 'AKIAZZTWQ7HAPRYD3APX',
-                    secretAccessKey: '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'
-                }
+                if(data.file){
+                    return ReactS3.uploadFile(data.file, config).then(response => {
 
-                return ReactS3.uploadFile(data.file, config).then(response => {
-
-                    if (response.result.status !== 204)
-                        throw new Error("Failed to upload image to S3");
-                    else {
-
-                        imgUrl = (response.location)
-                    }
-                })
-                    .catch(error => {
-                        console.log(error);
+                        if (response.result.status !== 204)
+                            throw new Error("Failed to upload image to S3");
+                        else {
+    
+                            imgUrl = (response.location)
+                        }
                     })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                    
+                }
+                
+
+                
             }
             await upload()
 

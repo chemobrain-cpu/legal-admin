@@ -9,18 +9,18 @@ const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 
 
-export const BlogEditComponent = ({ updateHandler, }) => {
-    let [file, setFile] = useState(false)
+export const BlogCaseEditComponent = ({ updateHandler, }) => {
+
     let [photo, setPhoto] = useState(false)
 
     let [isChangePhoto, setIsChangePhoto] = useState(false)
 
-    const [fileDataURL, setFileDataURL] = useState(null);
 
     const [photoDataURL, setPhotoDataURL] = useState(null);
 
     let [isData, setIsData] = useState(null)
-    let { color, blog } = useSelector(state => state.userAuth)
+
+    let { color, blogCase } = useSelector(state => state.userAuth)
 
     let { id } = useParams()
 
@@ -36,6 +36,7 @@ export const BlogEditComponent = ({ updateHandler, }) => {
 
     }
 
+
     const changePhotoHandler = (e) => {
         const file = e.target.files[0];
         if (!file.type.match(imageMimeType)) {
@@ -46,16 +47,7 @@ export const BlogEditComponent = ({ updateHandler, }) => {
         setPhoto(file);
     }
 
-    const changeFileHandler = (e) => {
-        const file = e.target.files[0];
 
-        if (!file.type.match(imageMimeType)) {
-            alert("Image mime type is not valid");
-            return;
-        }
-        setIsChangePhoto(true)
-        setFile(file);
-    }
 
 
 
@@ -84,47 +76,29 @@ export const BlogEditComponent = ({ updateHandler, }) => {
 
     }, [photo]);
 
-    useEffect(() => {
-        let fileReader, isCancel = false;
-        if (file) {
-            fileReader = new FileReader();
-            fileReader.onload = (e) => {
-                const { result } = e.target;
-                if (result && !isCancel) {
-                    setFileDataURL(result)
-                }
-            }
-            fileReader.readAsDataURL(file);
-        }
-        return () => {
-            isCancel = true;
-            if (fileReader && fileReader.readyState === 1) {
-                fileReader.abort();
-            }
-        }
 
-    }, [file]);
 
     useEffect(() => {
-        let dataObj = blog.find(data => data._id.toString() === id.toString())
+        let dataObj = blogCase.find(data => data._id.toString() === id.toString())
 
         setIsData(dataObj)
 
     }, [id])
 
+    
+
     let submitHandler = (e) => {
         e.preventDefault()
-    
+
         //patch case on
-        let objData = {...isData} 
+        let objData = { ...isData }
         objData.changedFiles = false
 
-        if(isChangePhoto){
+        if (isChangePhoto) {
             objData.changedFiles = true
         }
         objData.photo = photo
-        objData.file = file
-        
+
         updateHandler(objData)
         return
 
@@ -135,45 +109,29 @@ export const BlogEditComponent = ({ updateHandler, }) => {
         <div className={styles.homeScreen} style={{ backgroundColor: color.background }}>
 
             <div className={styles.timeline} style={{ backgroundColor: color.background }}>
-                <h1 className={styles.timelineHeading}>Edit Blog</h1>
+                <h1 className={styles.timelineHeading}>Edit Case Blog </h1>
 
-                {blog && isData && <form className={styles.editForm} onSubmit={submitHandler}>
+                {blogCase && isData && <form className={styles.editForm} onSubmit={submitHandler}>
 
-                    <div className={styles.inputCards}>
 
+
+                    {photoDataURL ? <div className={styles.inputCards}>
                         <label>
-                            Blog Topic
-                        </label>
-
-                        <input onChange={(e) => handleChangeHandler(e, 'blog_topic')} value={isData.blog_topic} type='text' required />
-
-
-                    </div>
-
-                    <div className={styles.inputCards}>
-                        <label>
-                            Date Of Creation
-                        </label>
-                        <input onChange={(e) => handleChangeHandler(e, 'date')} value={isData.date} type='date' />
-                    </div>
-
-                    {photoDataURL?<div className={styles.inputCards}>
-                        <label>
-                            blog photo 
+                            Case Blog Photo
                         </label>
                         <img src={photoDataURL} />
 
-                    </div>:<div className={styles.inputCards}>
+                    </div> : <div className={styles.inputCards}>
                         <label>
-                            blog photo
+                            Case Blog Photo
                         </label>
-                        <img src={isData.blog_photo_url} />
+                        <img src={isData.case_photo_url} />
 
                     </div>}
 
                     <div className={styles.inputCards}>
                         <label>
-                            Blog Photo
+                            Case Blog Photo
                         </label>
 
                         <input type='file' onChange={changePhotoHandler} />
@@ -181,69 +139,109 @@ export const BlogEditComponent = ({ updateHandler, }) => {
                     </div>
 
 
+
+
                     <div className={styles.inputCards}>
+
                         <label>
-                            Number Of View
+                            Case Blog Topic
                         </label>
-                        <input onChange={(e) => handleChangeHandler(e, 'numOfView')} value={isData.numOfView} type='number' />
+
+                        <input onChange={(e) => handleChangeHandler(e, 'case_topic')} value={isData.case_topic} type='text' required />
                     </div>
 
                     <div className={styles.inputCards}>
                         <label>
-                            Blog Text
+                            Case Blog Type
                         </label>
-
-                        <input onChange={(e) => handleChangeHandler(e, 'blog_text')} value={isData.blog_text} type='text' required />
+                        <input onChange={(e) => handleChangeHandler(e, 'case_type')} value={isData.case_type} type='text' />
                     </div>
 
-                    <div className={styles.inputCards}>
-                        <label>
-                            Blog Quote
-                        </label>
-                        <input onChange={(e) => handleChangeHandler(e, 'blog_qoute')} value={isData.blog_qoute} type='text' />
-                    </div>
+                    
+
+                 
 
 
                     <div className={styles.inputCards}>
                         <label>
-                            Blog Topic 2
+                            Case Blog Text
                         </label>
-
-                        <input onChange={(e) => handleChangeHandler(e, 'blog_topic2')} value={isData.blog_topic2} type='text' />
+                        <input onChange={(e) => handleChangeHandler(e, 'case_text')} value={isData.case_text} type='text' />
                     </div>
-
-                    {fileDataURL ? <div className={styles.inputCards}>
-                        <label>
-                            Blog photo 2
-                        </label>
-                        <img src={fileDataURL} />
-
-                    </div> : <div className={styles.inputCards}>
-                        <label>
-                            Blog photo 2
-                        </label>
-                        <img src={isData.blog_photo_url2} />
-
-                    </div>}
 
                     <div className={styles.inputCards}>
                         <label>
-                            Blog Photo 2
+                            Case Attorney
                         </label>
 
-                        <input type='file' onChange={changeFileHandler} />
+                        <input onChange={(e) => handleChangeHandler(e, 'case_attorney')} value={isData.case_attorney} type='text' required />
+                    </div>
 
-
+                    <div className={styles.inputCards}>
+                        <label>
+                            Case Duration
+                        </label>
+                        <input onChange={(e) => handleChangeHandler(e, 'case_duration')} value={isData.case_duration} type='text' />
                     </div>
 
 
                     <div className={styles.inputCards}>
                         <label>
-                            Blog Text 2
+                            Price
                         </label>
 
-                        <input onChange={(e) => handleChangeHandler(e, 'blog_text2')} value={isData.blog_text2} type='text' />
+                        <input onChange={(e) => handleChangeHandler(e, 'result_price')} value={isData.result_price} type='text' />
                     </div>
+
+
+
+
+                    <div className={styles.inputCards}>
+                        <label>
+                            Case  Category
+                        </label>
+
+                        <input onChange={(e) => handleChangeHandler(e, 'case_category')} value={isData.case_category} type='text' />
+                    </div>
+
+                    <div className={styles.inputCards}>
+                        <label>
+                            Case  Challenges
+                        </label>
+
+                        <input onChange={(e) => handleChangeHandler(e, 'case_challenge')} value={isData.case_challenge} type='text' />
+                    </div>
+
+                    <div className={styles.inputCards}>
+                        <label>
+
+                            Case  Legal strategy
+                        </label>
+
+                        <input onChange={(e) => handleChangeHandler(e, 'case_legal_strategy')} value={isData.case_legal_strategy} type='text' />
+                    </div>
+
+
+                    <div className={styles.inputCards}>
+                        <label>
+
+                            Case Result
+                        </label>
+
+                        <input onChange={(e) => handleChangeHandler(e, 'result_text')} value={isData.result_text} type='text' />
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                     <div className={styles.buttonContainer} >

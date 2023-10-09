@@ -28,7 +28,6 @@ const AdminEditCase = React.lazy(() => import('./screen/admin_screen/Dashboard/A
 
 const AdminAttorneys = React.lazy(() => import('./screen/admin_screen/Dashboard/Attorneys'))
 
-
 const AdminEditAttorney = React.lazy(() => import('./screen/admin_screen/Dashboard/AttorneyEdit'))
 
 
@@ -41,6 +40,16 @@ const AdminBlogs = React.lazy(() => import('./screen/admin_screen/Dashboard/Blog
 const AdminEditBlog = React.lazy(() => import('./screen/admin_screen/Dashboard/BlogEdit'))
 
 const AddBlog = React.lazy(() => import('./screen/admin_screen/Dashboard/AddBlog'))
+
+
+
+
+//import from blog cases
+const AdminBlogCases = React.lazy(() => import('./screen/admin_screen/Dashboard/BlogCases'))
+
+const AdminEditBlogCase = React.lazy(() => import('./screen/admin_screen/Dashboard/BlogCaseEdit'))
+
+const AddBlogCase = React.lazy(() => import('./screen/admin_screen/Dashboard/AddBlogCase'))
 
 
 
@@ -84,6 +93,18 @@ function App() {
           <Route path='/admindashboard/blogs/:id' element={adminToken ? <AdminEditBlog status={true} /> : <AdminLogin />} />
 
           <Route path='/admindashboard/newblog' element={adminToken ? <AddBlog status={true} /> : <AdminLogin />} />
+
+
+
+
+          {/*blog case routes*/}
+          <Route path='/admindashboard/blogcases' element={adminToken ? <AdminBlogCases status={false} /> : <AdminLogin />} />
+
+          <Route path='/admindashboard/blogcases/:id' element={adminToken ? <AdminEditBlogCase status={true} /> : <AdminLogin />} />
+
+          <Route path='/admindashboard/newblogcase' element={adminToken ? <AddBlogCase status={true} /> : <AdminLogin />} />
+
+
         </Routes>
 
 

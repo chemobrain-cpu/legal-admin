@@ -17,7 +17,13 @@ export const CREATE_BLOG = 'CREATE_BLOG'
 
 export const UPDATE_BLOG = 'UPDATE_BLOG'
 
+export const FETCH_BLOGCASES = 'FETCH_BLOGCASES'
 
+export const DELETE_BLOGCASE = 'DELETE_BLOGCASE'
+
+export const CREATE_BLOGCASE = 'CREATE_BLOGCASE'
+
+export const UPDATE_BLOGCASE = 'UPDATE_BLOGCASE'
 
 //pure functions to calculate the time remaining
 
@@ -78,7 +84,7 @@ export const checkIfAdminIsLoggedIn = () => {
     //https://legal-admin-backend.onrender.com
     
 
-    //https://legal-admin-backend.onrender.com
+    //http://localhlost:9090
       response = await fetch(`https://legal-admin-backend.onrender.com/adminbytoken`, {
         method: "GET",
         headers:{
@@ -876,6 +882,232 @@ export const updateBlog = (data)=>{
 
 
 
+
+//case blogs action
+export const fetchBlogCases = ()=>{
+  return async (dispatch, getState) => {
+    let {
+      adminToken
+    } = getState().userAuth
+
+    try {
+      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/blogcases`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "header": `${adminToken}`
+        }
+      })
+
+      //an error 
+      if (response.status === 300) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+        }
+      }
+
+      if (response.status === 301) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+        }
+      }
+
+      if (response.status === 200) {
+        let data = await response.json()
+
+        dispatch({type:FETCH_BLOGCASES,payload:data.response })
+
+        return {
+          bool: true,
+          message: data.response
+        }
+      }
+    }
+
+    catch (err) {
+      return {
+        bool: false,
+        message: err.message
+      }
+    }
+  }
+
+}
+
+
+
+
+export const  deleteBlogCase  = (id)=>{
+  return async (dispatch, getState) => {
+    let {
+      adminToken
+    } = getState().userAuth
+
+    try {
+      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/blogcase/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "header": `${adminToken}`
+        }
+      })
+
+      //an error 
+      if (response.status === 300) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+        }
+      }
+
+      if (response.status === 301) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+        }
+      }
+
+      if (response.status === 200) {
+
+        let data = await response.json()
+
+        dispatch({type:DELETE_BLOGCASE,payload:id})
+
+        return {
+          bool: true,
+          message: data.response
+        }
+      }
+    }
+    catch (err) {
+      return {
+        bool: false,
+        message: err.message
+      }
+    }
+  }
+
+}
+
+export const createBlogCase = (data)=>{
+  return async (dispatch, getState) => {
+    let {
+      adminToken
+    } = getState().userAuth
+
+    try {
+      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/newblogcase`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "header": `${adminToken}`
+        },
+        body:JSON.stringify(data)
+      })
+
+
+      //an error 
+      if (response.status === 300) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+        }
+      }
+
+      if (response.status === 301) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+        }
+      }
+
+      if (response.status === 200) {
+        let data = await response.json()
+        dispatch({type:CREATE_BLOGCASE,payload:data.response})
+        return {
+          bool: true,
+          message: data.response
+        }
+      }
+    }
+
+    catch (err) {
+      console.log(err)
+      return {
+        bool: false,
+        message: err.message
+      }
+    }
+  }
+
+
+}
+
+
+export const updateBlogCase = (data)=>{
+  return async (dispatch, getState) => {
+    let {
+      adminToken
+    } = getState().userAuth
+
+    try {
+      let response = await fetch(`https://legal-admin-backend.onrender.com/auth/blogcase/${data._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "header": `${adminToken}`
+        },
+        body:JSON.stringify(data)
+      })
+
+
+      //an error 
+      if (response.status === 300) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+        }
+      }
+
+      if (response.status === 301) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+        }
+      }
+
+      if (response.status === 200) {
+        let data = await response.json()
+        dispatch({type:UPDATE_BLOGCASE,payload:data.response})
+        return {
+          bool: true,
+          message: data.response
+        }
+      }
+    }
+
+    catch (err) {
+      console.log(err)
+      return {
+        bool: false,
+        message: err.message
+      }
+    }
+  }
+}
+
+
+
 export const logout = (id)=>{
   return async (dispatch, getState) => {
 
@@ -887,28 +1119,8 @@ export const logout = (id)=>{
 
 /*
 
-
-const attorneySchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-    nameOfAttorney: {
-        type: String,
-    },
-    about: {
-        type: String,
-    },
-    address: {
-        type: String
-    },
-    email: {
-        type: String
-    },
-    phone: {
-        type: String
-    },
-    photo: {
-        type: String
-    }
-})
+  
+   
 
 
 */

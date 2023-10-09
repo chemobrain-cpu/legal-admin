@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../../common/Home.module.css'
 import { useSelector } from "react-redux";
 
@@ -7,27 +7,27 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 
-export const AddBlogsComponent = ({ createHandler, }) => {
-    let [file, setFile] = useState(false)
+export const AddBlogCasesComponent = ({ createHandler, }) => {
     let [photo, setPhoto] = useState(false)
 
-    const [fileDataURL, setFileDataURL] = useState(null);
-
+   
     const [photoDataURL, setPhotoDataURL] = useState(null);
 
     let [isData, setIsData] = useState({
-        blog_photo_url:'',
-        blog_topic:'',
-        date:'',
-        numOfView:'',
-        blog_text:'',
-        blog_qoute:'',
-        blog_topic2:'',
-        blog_photo_url2:'',
-        blog_text2:'',
+        case_photo_url:'',
+        case_topic:'',
+        case_type:'',
+        case_text:'',
+        case_attorney:'',
+        case_duration:'',
+        result_price:'',
+        case_category:'',
+        case_challenge:'',
+        case_legal_strategy:'',
+        result_text:'',
     })
 
-    let { color} = useSelector(state => state.userAuth)
+    let { color } = useSelector(state => state.userAuth)
 
 
 
@@ -51,47 +51,18 @@ export const AddBlogsComponent = ({ createHandler, }) => {
         setPhoto(file);
     }
 
-    const changeFileHandler = (e) => {
-        const file = e.target.files[0];
-
-        if (!file.type.match(imageMimeType)) {
-            alert("Image mime type is not valid");
-            return;
-        }
-        setFile(file);
-    }
+   
 
     let submitHandler = (e) => {
         e.preventDefault()
-        let objData = {...isData}
+        let objData = { ...isData }
         objData.photo = photo
-        objData.file = file
         createHandler(objData)
         return
 
     }
- 
-    useEffect(() => {
-        let fileReader, isCancel = false;
-        if (file) {
-            fileReader = new FileReader();
-            fileReader.onload = (e) => {
-                const { result } = e.target;
-                if (result && !isCancel) {
-                    setFileDataURL(result)
-                }
-            }
-            fileReader.readAsDataURL(file);
-        }
-        return () => {
-            isCancel = true;
-            if (fileReader && fileReader.readyState === 1) {
-                fileReader.abort();
-            }
-        }
 
-    }, [file]);
-
+    
 
     useEffect(() => {
         let fileReader, isCancel = false;
@@ -119,43 +90,45 @@ export const AddBlogsComponent = ({ createHandler, }) => {
 
 
 
-   
+
 
 
     return (<>
         <div className={styles.homeScreen} style={{ backgroundColor: color.background }}>
 
+
             <div className={styles.timeline} style={{ backgroundColor: color.background }}>
-                <h1 className={styles.timelineHeading}>New Blog</h1>
+                <h1 className={styles.timelineHeading}>New Case Blog</h1>
 
                 <form className={styles.editForm} onSubmit={submitHandler}>
 
                     <div className={styles.inputCards}>
 
                         <label>
-                            Blog Topic 
+                            Case Blog Topic
                         </label>
-                        <input onChange={(e) => handleChangeHandler(e, 'blog_topic')} value={isData.blog_topic} type='text' required />
+
+                        <input onChange={(e) => handleChangeHandler(e, 'case_topic')} value={isData.case_topic} type='text' required />
                     </div>
 
                     <div className={styles.inputCards}>
                         <label>
-                            Date Of Creation
+                            Case Blog Type
                         </label>
-                        <input onChange={(e) => handleChangeHandler(e, 'date')} value={isData.date} type='date' />
+                        <input onChange={(e) => handleChangeHandler(e, 'case_type')} value={isData.case_type} type='text' />
                     </div>
 
-                    {photoDataURL?<div className={styles.inputCards}>
+                    {photoDataURL ? <div className={styles.inputCards}>
                         <label>
-                            blog photo
+                            Case blog photo
                         </label>
                         <img src={photoDataURL} />
-                        
-                    </div>:''}
-                    
+
+                    </div> : ''}
+
                     <div className={styles.inputCards}>
                         <label>
-                            Blog Photo
+                            Case Blog Photo
                         </label>
 
                         <input type='file' onChange={changePhotoHandler} />
@@ -166,59 +139,71 @@ export const AddBlogsComponent = ({ createHandler, }) => {
 
                     <div className={styles.inputCards}>
                         <label>
-                            Number Of View
+                            Case Blog Text
                         </label>
-                        <input onChange={(e) => handleChangeHandler(e, 'numOfView')} value={isData.numOfView} type='number'  />
+                        <input onChange={(e) => handleChangeHandler(e, 'case_text')} value={isData.case_text} type='text' />
                     </div>
 
                     <div className={styles.inputCards}>
                         <label>
-                            Blog Text
+                            Case Attorney
                         </label>
 
-                        <input onChange={(e) => handleChangeHandler(e, 'blog_text')} value={isData.blog_text} type='text' required />
+                        <input onChange={(e) => handleChangeHandler(e, 'case_attorney')} value={isData.case_attorney} type='text' required />
                     </div>
 
                     <div className={styles.inputCards}>
                         <label>
-                        Blog Quote
+                            Case Duration
                         </label>
-                        <input onChange={(e) => handleChangeHandler(e, 'blog_qoute')} value={isData.blog_qoute} type='text' />
+                        <input onChange={(e) => handleChangeHandler(e, 'case_duration')} value={isData.case_duration} type='text' />
+                    </div>
+
+
+                    <div className={styles.inputCards}>
+                        <label>
+                            Price
+                        </label>
+
+                        <input onChange={(e) => handleChangeHandler(e, 'result_price')} value={isData.result_price} type='text' />
                     </div>
 
                     
+
+
                     <div className={styles.inputCards}>
                         <label>
-                        Blog Topic 2
+                        Case  Category
                         </label>
 
-                        <input onChange={(e) => handleChangeHandler(e, 'blog_topic2')} value={isData.blog_topic2} type='text' />
+                        <input onChange={(e) => handleChangeHandler(e, 'case_category')} value={isData.case_category} type='text' />
                     </div>
 
-                    {fileDataURL?<div className={styles.inputCards}>
-                        <label>
-                            Blog photo 2
-                        </label>
-                        <img src={fileDataURL} />
-
-                    </div>:''}
-                    
                     <div className={styles.inputCards}>
                         <label>
-                            Blog Photo 2
+                        Case  Challenges
                         </label>
 
-                        <input type='file' onChange={changeFileHandler} />
+                        <input onChange={(e) => handleChangeHandler(e, 'case_challenge')} value={isData.case_challenge} type='text' />
+                    </div>
 
+                    <div className={styles.inputCards}>
+                        <label>
+                        
+                        Case  Legal strategy
+                        </label>
+
+                        <input onChange={(e) => handleChangeHandler(e, 'case_legal_strategy')} value={isData.case_legal_strategy} type='text' />
                     </div>
 
 
                     <div className={styles.inputCards}>
                         <label>
-                        Blog Text 2
+                        
+                        Case Result
                         </label>
 
-                        <input onChange={(e) => handleChangeHandler(e, 'blog_text2')} value={isData.blog_text2} type='text' />
+                        <input onChange={(e) => handleChangeHandler(e, 'result_text')} value={isData.result_text} type='text' />
                     </div>
 
 

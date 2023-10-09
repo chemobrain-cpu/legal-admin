@@ -29,6 +29,13 @@ const Sidebar = ({status}) => {
             title: 'Attorneys',
             link:'/admindashboard/attorneys'
         },
+        {
+            icon: 'edit',
+            title: 'Blog Cases',
+            link:'/admindashboard/blogcases'
+        },
+
+        
        
         {
             icon: 'edit',
@@ -46,6 +53,12 @@ const Sidebar = ({status}) => {
             title: 'new attorney',
             link:'/admindashboard/newattorney'
         },
+
+        {
+            icon: 'add',
+            title: 'new Blog Case',
+            link:'/admindashboard/newblogcase'
+        }
        
         
         

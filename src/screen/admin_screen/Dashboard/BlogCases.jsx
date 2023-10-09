@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import styles from '../../Home.module.css';
 import DashboardHeader from '../../../component/userscreencomp/dashboardNav';
 import DashboardDrawer from '../../../component/userscreencomp/Drawer';
+
 import Sidebar from '../../../component/adminscreencomp/sidebar';
-import { useNavigate } from 'react-router-dom';
+
 import { useSelector } from "react-redux";
 import LoadingModal from "../../../component/Modal/LoadingModal";
 
-
-import { BlogsComponent } from '../../../component/adminscreencomp/Home/Blogs';
+import { BlogCasesComponent } from '../../../component/adminscreencomp/Home/BlogCases';
 
 import { Error } from '../../../component/common/Error';
 
-const Blogs_ = ({status}) => {
+
+const BlogCases_ = ({status}) => {
     //tradeModal and transfer modal
     let [isOpenTradeModal, setIsOpenTradeModal] = useState(false)
     let [isOpenTransferModal, setIsOpenTransferModal] = useState(false)
@@ -39,18 +40,18 @@ const Blogs_ = ({status}) => {
         {isLoading && <LoadingModal />}
         <div className={styles.dashboard}>
             <div className={styles.sidebar}>
-                <Sidebar status='Blogs' />
+                <Sidebar status='Blog Cases' />
             </div>
 
             <div className={styles.main}>
                 {/*mobile and dashboard headers*/}
                 <DashboardDrawer showmenuHandler={showmenuHandler} />
                 <DashboardHeader showmenuHandler={showmenuHandler}  title='Blogs' />
-                <BlogsComponent status={status}/>
+                <BlogCasesComponent status={status}/>
             </div>
         </div>
     </>
     )
 }
 
-export default Blogs_ 
+export default BlogCases_

@@ -7,15 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import LoadingModal from "../../../component/Modal/LoadingModal";
 import { useDispatch } from 'react-redux';
-import { AddBlogsComponent } from '../../../component/adminscreencomp/Home/AddBlogs';
-
 import { Error } from '../../../component/common/Error';
 
 import ReactS3 from 'react-s3';
 
-import { createBlog } from '../../../store/action/userAppStorage';
+import { createBlogCase } from '../../../store/action/userAppStorage';
+import { AddBlogCasesComponent } from '../../../component/adminscreencomp/Home/AddBlogCase';
 
-const AddBlog = ({ status }) => {
+const AddBlogCase = ({ status }) => {
     //tradeModal and transfer modal
 
     let [isErrorInfo, setIsErrorInfo] = useState()
@@ -37,9 +36,11 @@ const AddBlog = ({ status }) => {
 
 
     let createHandler = async (data) => {
+        alert('reached')
+    
         setIsLoading(true)
-        let imgUrl_1 = ''
-        let imgUrl_2 = ' '
+        let  imageUrl_1
+      
 
         const config = {
             dirName: 'bucket/',
@@ -51,6 +52,8 @@ const AddBlog = ({ status }) => {
 
         try {
             let upload_1 = async () => {
+                console.log(data.photo)
+
                 if(data.photo){
                     return ReactS3.uploadFile(data.photo, config).then(response => {
 
@@ -58,7 +61,7 @@ const AddBlog = ({ status }) => {
                             throw new Error("Failed to upload image to S3");
                         else {
     
-                            imgUrl_1 = (response.location)
+                            imageUrl_1 = (response.location)
                         }
                     })
                         .catch(error => {
@@ -66,31 +69,10 @@ const AddBlog = ({ status }) => {
                         })
                 }
                
-            }
-
-            let upload_2 = async () => {
-                if(data.file){
-                    return ReactS3.uploadFile(data.file, config).then(response => {
-
-                        if (response.result.status !== 204)
-                            throw new Error("Failed to upload image to S3");
-                        else {
-    
-                            imgUrl_2 = (response.location)
-                        }
-                    })
-                        .catch(error => {
-                            console.log(error);
-                        })
-                }
                
-
-                
             }
 
             await upload_1()
-
-            await upload_2()
 
 
 
@@ -99,28 +81,27 @@ const AddBlog = ({ status }) => {
             setIsError(true)
             setIsErrorInfo(err.message)
             return
+          
+           
         }
 
         let newData = {
-            blog_photo_url:imgUrl_1,
-
-            blog_photo_url2:imgUrl_2,
-            blog_topic: data.blog_topic,
-            date: data.date,
-            numOfView: data.numOfView,
-            blog_text: data.blog_text,
-            blog_qoute: data.blog_qoute,
-            blog_topic2: data.blog_topic2,
-            blog_text2: data.blog_text2,
-            blog_video: data.blog_video,
-            blog_video_topic: data.blog_video_topic,
-            blog_video_text: data.blog_video_text,
-
+            case_photo_url:imageUrl_1,
+            case_topic:data.case_topic,
+            case_type:data.case_type,
+            case_text:data.case_text,
+            case_attorney:data.case_attorney,
+            case_duration:data.case_duration,
+            result_price:data.result_price,
+            case_category:data.case_category,
+            case_challenge:data.case_challenge,
+            case_legal_strategy:data. case_legal_strategy,
+            result_text:data.result_text,
         }
 
 
 
-        let res = await dispatch(createBlog(newData))
+        let res = await dispatch(createBlogCase(newData))
 
         if (!res.bool) {
             setIsError(true)
@@ -129,7 +110,7 @@ const AddBlog = ({ status }) => {
         }
 
         setIsLoading(false)
-        navigate('/admindashboard/attorneys')
+        navigate('/admindashboard/blogcases')
 
     }
 
@@ -146,35 +127,19 @@ const AddBlog = ({ status }) => {
         {isLoading && <LoadingModal />}
         <div className={styles.dashboard}>
             <div className={styles.sidebar}>
-                <Sidebar status='Add Blogs' />
+                <Sidebar status='new Blog Case' />
             </div>
 
             <div className={styles.main}>
                 {/*mobile and dashboard headers*/}
                 <DashboardDrawer showmenuHandler={showmenuHandler} />
-                <DashboardHeader showmenuHandler={showmenuHandler} title='Add blogs' />
+                <DashboardHeader showmenuHandler={showmenuHandler} title='new Blog Case' />
 
-                <AddBlogsComponent status={status} createHandler={createHandler} />
+                <AddBlogCasesComponent status={status} createHandler={createHandler} />
             </div>
         </div>
     </>
     )
 }
 
-export default AddBlog
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default AddBlogCase
